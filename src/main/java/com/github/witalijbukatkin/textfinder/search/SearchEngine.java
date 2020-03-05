@@ -1,7 +1,14 @@
-package search;
+/*
+ * <!--
+ *   ~ Copyright (c) 2019. Witalij Bukatkin
+ *   ~ Github profile: https://github.com/witalijbukatkin
+ *   -->
+ */
 
-import bean.Part;
-import util.FileReader;
+package com.github.witalijbukatkin.textfinder.search;
+
+import com.github.witalijbukatkin.textfinder.bean.Part;
+import com.github.witalijbukatkin.textfinder.util.FileReader;
 
 import java.io.*;
 import java.util.ArrayList;

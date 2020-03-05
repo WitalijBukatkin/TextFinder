@@ -1,8 +1,15 @@
-package element;
+/*
+ * <!--
+ *   ~ Copyright (c) 2019. Witalij Bukatkin
+ *   ~ Github profile: https://github.com/witalijbukatkin
+ *   -->
+ */
 
-import util.FileReader;
-import bean.Part;
-import search.SearchEngine;
+package com.github.witalijbukatkin.textfinder.element;
+
+import com.github.witalijbukatkin.textfinder.bean.Part;
+import com.github.witalijbukatkin.textfinder.search.SearchEngine;
+import com.github.witalijbukatkin.textfinder.util.FileReader;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;

@@ -1,13 +1,21 @@
+/*
+ * <!--
+ *   ~ Copyright (c) 2019. Witalij Bukatkin
+ *   ~ Github profile: https://github.com/witalijbukatkin
+ *   -->
+ */
+
+package com.github.witalijbukatkin.textfinder.search;
+
+import com.github.witalijbukatkin.textfinder.bean.Part;
 import org.junit.jupiter.api.Test;
-import search.FindText;
-import bean.Part;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
-public class FindTextTest {
+class FindTextTest {
     private FindText findText = new FindText(null);
 
     @Test

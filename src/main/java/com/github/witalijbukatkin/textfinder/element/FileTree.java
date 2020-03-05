@@ -1,4 +1,11 @@
-package element;
+/*
+ * <!--
+ *   ~ Copyright (c) 2019. Witalij Bukatkin
+ *   ~ Github profile: https://github.com/witalijbukatkin
+ *   -->
+ */
+
+package com.github.witalijbukatkin.textfinder.element;
 
 import javax.swing.*;
 import javax.swing.tree.*;

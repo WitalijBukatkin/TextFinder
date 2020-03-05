@@ -1,6 +1,13 @@
-package element;
+/*
+ * <!--
+ *   ~ Copyright (c) 2019. Witalij Bukatkin
+ *   ~ Github profile: https://github.com/witalijbukatkin
+ *   -->
+ */
 
-import search.SearchEngine;
+package com.github.witalijbukatkin.textfinder.element;
+
+import com.github.witalijbukatkin.textfinder.search.SearchEngine;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -13,7 +20,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static java.awt.BorderLayout.*;
-import static javax.swing.JFileChooser.*;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
+import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Window extends JFrame {
