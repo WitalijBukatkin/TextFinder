@@ -124,19 +124,23 @@ public class Window extends JFrame {
                 .replace(".", "").toLowerCase();
 
         if(!text.trim().equals("") && searchEngine != null){
-            try {
-                fileTree.update();
 
-                searchEngine.search(text, extension, ((fileName, countFound) -> {
-                    fileTree.addSearchResult(fileName, countFound);
-                }));
+            searchEngine.searchAsync(() -> {
+                try{
+                    fileTree.update();
 
-                showMessageDialog(null, "Matches find count: " + searchEngine.getCount());
+                    searchEngine.search(text, extension, ((fileName, countFound) -> {
+                        fileTree.addSearchResult(fileName, countFound);
+                    }));
 
-                textPane.update();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    showMessageDialog(null, "Matches find count: " + searchEngine.getCount());
+
+                    textPane.update();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
         }
     }
 

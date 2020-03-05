@@ -33,6 +33,11 @@ public class SearchEngine implements AutoCloseable{
         count = engine(rootFile, pattern, extension, result);
     }
 
+    public void searchAsync(Runnable runnable) {
+        new Thread(runnable)
+                .start();
+    }
+
     public int engine(File file, String pattern, String extension, SearchResult result) throws IOException{
         int count = 0;
 
@@ -146,6 +151,9 @@ public class SearchEngine implements AutoCloseable{
         if(tempFile != null) {
             currentInputStream = new ObjectInputStream(new FileInputStream(tempFile));
         }
+
+        pageIndex = 0;
+        prev = null;
     }
 
     @Override
