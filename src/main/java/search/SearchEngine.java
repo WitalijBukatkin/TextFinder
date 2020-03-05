@@ -24,6 +24,8 @@ public class SearchEngine implements AutoCloseable{
 
     private int count;
 
+    private Thread threadAsync;
+
     public SearchEngine(File rootFile, int sizeBlock) {
         this.rootFile = rootFile;
         this.sizeBlock = sizeBlock;
@@ -34,8 +36,10 @@ public class SearchEngine implements AutoCloseable{
     }
 
     public void searchAsync(Runnable runnable) {
-        new Thread(runnable)
-                .start();
+        if(threadAsync == null){
+            threadAsync = new Thread(runnable);
+            threadAsync.start();
+        }
     }
 
     public int engine(File file, String pattern, String extension, SearchResult result) throws IOException{
@@ -168,5 +172,9 @@ public class SearchEngine implements AutoCloseable{
 
     public int getCount() {
         return count;
+    }
+
+    public void threadAsyncReset() {
+        threadAsync = null;
     }
 }

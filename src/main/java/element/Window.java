@@ -136,11 +136,12 @@ public class Window extends JFrame {
                     showMessageDialog(null, "Matches find count: " + searchEngine.getCount());
 
                     textPane.update();
+
+                    searchEngine.threadAsyncReset();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    searchEngine.threadAsyncReset();
                 }
             });
-
         }
     }
 
