@@ -1,8 +1,6 @@
 /*
- * <!--
- *   ~ Copyright (c) 2019. Witalij Bukatkin
- *   ~ Github profile: https://github.com/witalijbukatkin
- *   -->
+ * Copyright (c) 2020. Witalij Bukatkin
+ * Github profile: https://github.com/witalijbukatkin
  */
 
 package com.github.witalijbukatkin.textfinder;
