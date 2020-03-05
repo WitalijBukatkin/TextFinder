@@ -127,13 +127,12 @@ public class Window extends JFrame {
             try {
                 fileTree.update();
 
-                int count  = searchEngine.search(text, extension, ((fileName, countFound) -> {
+                searchEngine.search(text, extension, ((fileName, countFound) -> {
                     fileTree.addSearchResult(fileName, countFound);
                 }));
 
-                showMessageDialog(null, "Matches find count: " + count);
+                showMessageDialog(null, "Matches find count: " + searchEngine.getCount());
 
-                textPane.setEngine(searchEngine);
                 textPane.update();
             } catch (IOException e) {
                 e.printStackTrace();

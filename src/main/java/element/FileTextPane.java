@@ -46,14 +46,10 @@ public class FileTextPane extends JPanel {
     }
 
     private JScrollPane createScrollPanel(){
-        JPanel panel = new JPanel(new BorderLayout());
-
         textPane = new JTextPane();
         textPane.setEditable(false);
 
-        panel.add(textPane);
-
-        return new JScrollPane(panel);
+        return new JScrollPane(textPane);
     }
 
     private JPanel createBottomPanel(){
@@ -97,16 +93,6 @@ public class FileTextPane extends JPanel {
         }
     }
 
-    public void search(boolean isNext) {
-        if(engine != null && engine.ready()){
-            try {
-                parts = isNext ? engine.next() : engine.prev();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void updatePage(String text) {
         partsIndex = 0;
 
@@ -120,14 +106,24 @@ public class FileTextPane extends JPanel {
 
     public void nextAction() {
         if(reader != null && reader.getPageId() < reader.getPageCount()) {
-            search(true);
+            try {
+                parts = engine.next();
+                System.out.println(parts);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             updatePage(reader.next());
         }
     }
 
     public void backAction() {
         if(reader != null && reader.getPageId() > 1) {
-            search(false);
+            try {
+                parts = engine.prev();
+                System.out.println(parts);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             updatePage(reader.prev());
         }
     }
