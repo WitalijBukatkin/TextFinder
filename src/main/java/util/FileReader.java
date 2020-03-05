@@ -20,6 +20,10 @@ public class FileReader implements AutoCloseable{
         update();
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public void update() throws IOException{
         close();
 
@@ -37,7 +41,7 @@ public class FileReader implements AutoCloseable{
             try {
                 reader.read(chars);
                 page ++;
-                return String.valueOf(chars);
+                return String.valueOf(chars).replace("\n", "");
             } catch (IOException ignored) {
             }
         }

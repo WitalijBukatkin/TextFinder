@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 public class FindTextTest {
-    FindText findText = new FindText(null);
+    private FindText findText = new FindText(null);
 
     @Test
     void patternEqualsData() {

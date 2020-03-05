@@ -15,9 +15,11 @@ public class SearchEngine implements AutoCloseable{
 
     private ObjectInputStream inputStream;
 
-    private File currentFile;
+    private FileReader currentReader;
 
     private Part prev;
+
+    private int pageIndex;
 
     private Map<File, File> temps = new HashMap<>();
 
@@ -67,74 +69,85 @@ public class SearchEngine implements AutoCloseable{
         return count;
     }
 
-    public List<Part> next(int pageIndex) throws IOException, ClassNotFoundException {
-        List<Part> parts = new ArrayList<>();
+    public List<Part> next() throws IOException, ClassNotFoundException {
+        if(ready()) {
 
-        if(prev != null){
+            List<Part> parts = new ArrayList<>();
 
-            if(prev.getPageEnd() == pageIndex) {
-                parts.add(prev);
-                prev = null;
+            if (pageIndex > currentReader.getPageCount()) {
+                pageIndex = currentReader.getPageCount();
             }
-            else if(prev.getPageStart() <= pageIndex){
-                parts.add(prev);
-                return parts;
-            }
-            else {
-                return parts;
-            }
-        }
 
-        if(inputStream != null) {
-            try {
-                while (true) {
-                    Part part = (Part) inputStream.readObject();
+            if (prev != null) {
 
-                    if (part.getPageStart() > pageIndex) {
-                        prev = part;
-                        break;
-                    }
-
-                    parts.add(part);
-
-                    if(part.getPageEnd() > pageIndex){
-                        prev = part;
-                        break;
-                    }
+                if (prev.getPageEnd() == pageIndex) {
+                    parts.add(prev);
+                    prev = null;
+                } else if (prev.getPageStart() <= pageIndex) {
+                    parts.add(prev);
+                    pageIndex++;
+                    return parts;
+                } else {
+                    pageIndex++;
+                    return parts;
                 }
-            } catch (EOFException ignored){
             }
-        }
 
-        return parts;
+            if (inputStream != null) {
+                try {
+                    while (true) {
+                        Part part = (Part) inputStream.readObject();
+
+                        if (part.getPageStart() > pageIndex) {
+                            prev = part;
+                            break;
+                        }
+
+                        parts.add(part);
+
+                        if (part.getPageEnd() > pageIndex) {
+                            prev = part;
+                            break;
+                        }
+                    }
+                } catch (EOFException ignored) {
+                }
+            }
+
+            pageIndex++;
+            return parts;
+        }
+        else return null;
     }
 
-    public List<Part> prev(int pageIndex) throws IOException, ClassNotFoundException{
-        newCurrent(currentFile);
+    public List<Part> prev() throws IOException, ClassNotFoundException{
+        newCurrent(currentReader);
 
         prev = null;
 
         List<Part> parts = null;
 
-        for(int i = 0; i < pageIndex -1; i++){
-            parts = next(i);
+        int prevIndex = pageIndex;
+
+        for(pageIndex = 0; pageIndex < prevIndex - 1;){
+            parts = next();
         }
 
         return parts;
     }
 
-    public boolean ready(){
+    public boolean ready() {
         return inputStream != null;
     }
 
-    public void newCurrent(File currentFile) throws IOException {
-        this.currentFile = currentFile;
+    public void newCurrent(FileReader reader) throws IOException {
+        this.currentReader = reader;
 
         if(inputStream != null) {
             inputStream.close();
         }
 
-        File tempFile = temps.get(currentFile);
+        File tempFile = temps.get(reader.getFile());
 
         if(tempFile != null) {
             inputStream = new ObjectInputStream(new FileInputStream(tempFile));
@@ -148,6 +161,7 @@ public class SearchEngine implements AutoCloseable{
 
         if(inputStream != null){
             inputStream.close();
+            inputStream = null;
         }
     }
 }
